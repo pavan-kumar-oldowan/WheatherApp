@@ -2,7 +2,7 @@ import  {View,Text,StyleSheet, TextInput,TouchableOpacity} from "react-native";
 import React ,{useState,useEffect}from "react"
 import {fetchWeatherByCity} from "../services/weatherApi";
 import { WeatherResponse } from "@/types/wheather";
-
+import { WeatherCard } from "@/components/weatherComponent";
 const HomeScreen:React.FC= ()=>{
     const [weather,setWeather] = useState<WeatherResponse|null>(null)
     const [Loading,setLoading] = useState<boolean>(false);
@@ -47,14 +47,8 @@ const HomeScreen:React.FC= ()=>{
            </TouchableOpacity>
            {Loading && <Text>Loading ....</Text>}
            {error ?<Text style={styles.error}>{error}</Text>:null}
-           {weather && !Loading && (
-              <View style={styles.result}>
-                 <Text style={styles.city}>{weather.name}</Text>
-                 <Text>Temperature:{weather.main.temp}</Text>
-                 <Text>Condition:{weather.weather[0].main}</Text>
-                 <Text>Humidity:{weather.main.humidity}%</Text>
-              </View>
-           )}
+           {weather && !Loading && <WeatherCard weather={weather} />}
+
 
         </View>
     )
