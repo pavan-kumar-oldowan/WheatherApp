@@ -1,4 +1,4 @@
-import  {View,Text,StyleSheet, TextInput,TouchableOpacity} from "react-native";
+import  {View,Text,StyleSheet, TextInput,TouchableOpacity,ActivityIndicator} from "react-native";
 import React ,{useState,useEffect}from "react"
 import {fetchWeatherByCity} from "../services/weatherApi";
 import { WeatherResponse } from "@/types/wheather";
@@ -45,8 +45,12 @@ const HomeScreen:React.FC= ()=>{
            <TouchableOpacity style={styles.button} onPress={getWeather}>
                <Text style={styles.buttontext}>Search</Text>
            </TouchableOpacity>
-           {Loading && <Text>Loading ....</Text>}
-           {error ?<Text style={styles.error}>{error}</Text>:null}
+           {Loading && <ActivityIndicator size="large"/>}
+           {error && <View style={styles.errorBox}>
+                      <Text style={styles.error}>{error}</Text>
+                      </View>}
+                
+                
            {weather && !Loading && <WeatherCard weather={weather} />}
 
 
@@ -81,7 +85,7 @@ const styles = StyleSheet.create({
            fontWeight: 'bold',
        },
        error:{
-           color:"red",
+           color:"#cc0000",
            textAlign:"center",
            marginTop:10
        },
@@ -92,7 +96,13 @@ const styles = StyleSheet.create({
        city:{
         fontSize:20,
         fontWeight:"bold"
-       }
+       },
+        errorBox: {
+        backgroundColor: '#ffe6e6',
+        padding: 10,
+        borderRadius: 8,
+        marginTop: 10,
+        },
 
 
 })
